@@ -6,9 +6,14 @@
              xmlns:local="clr-namespace:PutPhoto4A4.Views"
              xmlns:vm="clr-namespace:PutPhoto4A4.ViewModels"
              mc:Ignorable="d" Height="21cm" Width="29.7cm">
+    
+    <UserControl.DataContext>
+        <vm:MainWindowViewModel />
+    </UserControl.DataContext>
+    
     <Grid Width="29.7cm" Height="21cm">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5cm" />
+            <RowDefinition Height="1.0cm" />
             <RowDefinition Height="3*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="2*" />
@@ -17,7 +22,14 @@
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
-
+        <TextBlock 
+            Grid.Row="0"
+            Text="{Binding Title}"
+            Margin="0.4cm 0.4cm 0 0"
+            FontSize="15pt"
+            />
+        
+        
 
         <GridSplitter 
                     Grid.Row="2"
