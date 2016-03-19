@@ -96,6 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\GooglePhotoViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -105,9 +109,13 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Models\Photo.cs" />
+    <Compile Include="ViewModels\GooglePhotoViewerViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\A4Paper.xaml.cs">
       <DependentUpon>A4Paper.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GooglePhotoViewer.xaml.cs">
+      <DependentUpon>GooglePhotoViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

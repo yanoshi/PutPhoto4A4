@@ -24,5 +24,16 @@ namespace PutPhoto4A4.Views
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// ロード完了時のイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            var googlePhotos = new GooglePhotoViewer();
+            googlePhotos.ShowDialog();
+        }
     }
 }

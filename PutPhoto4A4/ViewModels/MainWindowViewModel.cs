@@ -38,6 +38,7 @@ namespace PutPhoto4A4.ViewModels
                 if (_Title != value)
                 {
                     _Title = value;
+                    System.Diagnostics.Debug.WriteLine(value.ToString());
                     RaisePropertyChanged();
                 }
             }
