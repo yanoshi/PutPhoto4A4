@@ -1,0 +1,36 @@
+﻿<Window x:Class="PutPhoto4A4.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PutPhoto4A4"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        WindowStyle="None"
+        WindowState="Maximized"
+        Topmost="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <!-- 上部メニュー -->
+        </DockPanel>
+
+
+        <ScrollViewer Grid.Row="1" Grid.Column="0">
+            <!-- メイン描画部分 -->
+            
+        </ScrollViewer>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <!-- 右メニュー -->
+        </ScrollViewer>
+    </Grid>
+</Window>
