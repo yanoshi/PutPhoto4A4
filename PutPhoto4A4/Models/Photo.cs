@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
 using OpenCvSharp.Extensions;
+using Livet;
 
 namespace PutPhoto4A4.Models
 {
-    public class Photo
+    public class Photo : ViewModel
     {
         #region コンストラクタ
         public Photo(string uri)
@@ -27,23 +28,81 @@ namespace PutPhoto4A4.Models
 
         #region プロパティ
         #region Title
-        public string Title { get; set; }
+        private string _Title;
+        public string Title
+        {
+            get { return _Title; }
+            set
+            {
+                if(_Title!=value)
+                {
+                    _Title = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("OutputMat");
+                    RaisePropertyChanged("OutputImageSource");
+                }
+            }
+        }
         #endregion
 
 
         #region IsCrop
-        public bool IsCrop { get; set; } = false;
+        private bool _IsCrop=false;
+        public bool IsCrop
+        {
+            get { return _IsCrop; }
+            set
+            {
+                if (_IsCrop != value)
+                {
+                    _IsCrop = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("OutputMat");
+                    RaisePropertyChanged("OutputImageSource");
+                }
+            }
+        }
         #endregion
 
+
         #region VerticalAlign
-        public VerticalState VerticalAlign { get; set; }
+        private VerticalState _VerticalAlign;
+
+        public VerticalState VerticalAlign
+        {
+            get { return _VerticalAlign; }
+            set
+            {
+                if(_VerticalAlign!=value)
+                {
+                    _VerticalAlign = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("OutputMat");
+                    RaisePropertyChanged("OutputImageSource");
+                }
+            }
+        }
         
         public enum VerticalState { Top,Center,Bottom }
         #endregion
 
-        
+
         #region HorizontalAlign
-        public HorizontalState HorizontalAlign { get; set; }
+        private HorizontalState _HorizontalAlign;
+        public HorizontalState HorizontalAlign
+        {
+            get { return _HorizontalAlign; }
+            set
+            {
+                if(_HorizontalAlign!=value)
+                {
+                    _HorizontalAlign = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("OutputMat");
+                    RaisePropertyChanged("OutputImageSource");
+                }
+            }
+        }
 
         public enum HorizontalState { Left,Center,Right}
         #endregion

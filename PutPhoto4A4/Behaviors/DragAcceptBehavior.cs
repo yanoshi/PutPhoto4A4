@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Interactivity;
 using PutPhoto4A4.Models;
+using System.Windows.Controls;
 
 namespace PutPhoto4A4.Behaviors
 {

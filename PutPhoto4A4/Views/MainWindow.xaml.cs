@@ -23,8 +23,11 @@ namespace PutPhoto4A4.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool assemblyLoaded { get; set; }
+
         public MainWindow()
         {
+            assemblyLoaded = typeof(System.Windows.Interactivity.Interaction) != null;
             InitializeComponent();
         }
 

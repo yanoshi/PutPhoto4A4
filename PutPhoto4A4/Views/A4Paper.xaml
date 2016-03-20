@@ -29,27 +29,22 @@
                     FontSize="15pt"
                     />
 
-        <ListBox 
-                    Grid.Row="1"
-                    ItemsSource="{Binding SpineVoxelDatas}" 
-                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
-                    SelectedIndex="{Binding DataContext.SelectingSpineIndex, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
-                    >
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
+        <ItemsControl 
+            Grid.Row="1"
+            ItemsSource="{Binding SpineVoxelDatas}" 
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            >
 
 
-            <ListBox.ItemsPanel>
+            <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
+                    <WrapPanel Orientation="Horizontal" FlowDirection="RightToLeft" />
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+            </ItemsControl.ItemsPanel>
 
 
-            <ListBox.ItemTemplate>
+            <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <DataTemplate.Resources>
                         <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
@@ -57,8 +52,6 @@
                         <Style x:Key="ItemDesign" TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="0" />
                             <Setter Property="Padding" Value="5" />
-                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.ControlDarkBrush}" />
-                            <Setter Property="BorderThickness" Value="1 1 1 1" />
                         </Style>
                     </DataTemplate.Resources>
 
@@ -73,8 +66,8 @@
                         </Grid>
                     </Border>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <GridSplitter 
                     Grid.Row="2"

@@ -3,8 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:PutPhoto4A4"
         xmlns:vm="clr-namespace:PutPhoto4A4.ViewModels"
+        xmlns:bh="clr-namespace:PutPhoto4A4.Behaviors"
         mc:Ignorable="d"
         Title="MainWindow" 
         WindowStyle="None"
@@ -32,7 +35,80 @@
 
         <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto">
             <!-- メイン描画部分 -->
-            
+            <Grid Width="29.7cm" Height="21cm">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.0cm" />
+                    <RowDefinition Height="3*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock 
+                    Grid.Row="0"
+                    Text="{Binding Title}"
+                    Margin="0.4cm 0.4cm 0 0"
+                    FontSize="15pt"
+                    />
+
+                <ItemsControl 
+                    Grid.Row="1"
+                    ItemsSource="{Binding PaperTopPhotoList}" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    AllowDrop="True"
+                    >
+
+                    <i:Interaction.Behaviors>
+                        <bh:DragAcceptBehavior Description="{Binding Description}" />
+                    </i:Interaction.Behaviors>
+                    
+                    
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" FlowDirection="RightToLeft" Background="White" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
+
+                                <Style x:Key="ItemDesign" TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="0" />
+                                    <Setter Property="Padding" Value="5" />
+                                </Style>
+                            </DataTemplate.Resources>
+
+                            <Border Style="{StaticResource ItemDesign}">
+                                <Grid>
+                                    <TextBlock Text="{Binding Title}" />
+                                    <Image 
+                                        Source="{Binding OutputImageSource}" 
+                                        Stretch="None"
+                                        >
+                                        <i:Interaction.Behaviors>
+                                            <bh:DragStartBehavior AllowedEffects="Move" DragDropData="{Binding}" />
+                                        </i:Interaction.Behaviors>
+                                    </Image>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <GridSplitter 
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Width="4"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Center" />
+            </Grid>
         </ScrollViewer>
 
         <!-- 右メニュー -->
@@ -40,8 +116,12 @@
             ItemsSource="{Binding InputPhotoList}"
             Grid.Row="1" Grid.Column="1"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            AllowDrop="True"
             >
 
+            <i:Interaction.Behaviors>
+                <bh:DragAcceptBehavior Description="{Binding Description}" />
+            </i:Interaction.Behaviors>
 
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -52,20 +132,14 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <DataTemplate.Resources>
-                        <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
-
-                        <Style x:Key="InputItemDesign" TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="0" />
-                            <Setter Property="Padding" Value="5" />
-                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.ControlDarkBrush}" />
-                            <Setter Property="BorderThickness" Value="1 1 1 1" />
-                        </Style>
-                    </DataTemplate.Resources>
-
+                    
                     <Image 
-                        Source="{Binding OutputImageSource}" 
-                        />
+                        Source="{Binding OutputImageSource}">
+                        <i:Interaction.Behaviors>
+                            <bh:DragStartBehavior AllowedEffects="Move" DragDropData="{Binding}" />
+                        </i:Interaction.Behaviors>
+                    </Image>
+                    
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
