@@ -12,68 +12,117 @@
     </UserControl.DataContext>
 
     <Grid Width="29.7cm" Height="21cm">
+        <Grid.LayoutTransform>
+            <ScaleTransform ScaleX="{Binding PaperScale}"
+                                    ScaleY="{Binding PaperScale}" />
+        </Grid.LayoutTransform>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="1.0cm" />
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="{Binding TopRegionHeight, Mode=TwoWay}" />
+            <RowDefinition Height="0.25cm" />
+            <RowDefinition Height="{Binding BottomRegionHeight, Mode=TwoWay}" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
 
         <TextBlock 
-                    Grid.Row="0"
-                    Text="{Binding Title}"
-                    Margin="0.4cm 0.4cm 0 0"
-                    FontSize="15pt"
-                    />
+            Grid.Row="0"
+            Text="{Binding Title}"
+            Margin="0.3cm 0.3cm 0.3cm 0"
+            FontSize="0.5cm"
+            VerticalAlignment="Stretch"
+            />
 
-        <ItemsControl 
-            Grid.Row="1"
-            ItemsSource="{Binding SpineVoxelDatas}" 
+        <ItemsControl
+            ItemsSource="{Binding PaperTopPhotoList}" 
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
             ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            AllowDrop="True"
+            Background="White"
+            Grid.Row="1"
             >
-
-
+            
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" FlowDirection="RightToLeft" />
+                    <WrapPanel 
+                        Orientation="Vertical" 
+                        FlowDirection="RightToLeft" 
+                        Background="White"
+                        ItemHeight="Auto"
+                        ItemWidth="Auto"
+                        />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
 
 
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <DataTemplate.Resources>
-                        <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
-
-                        <Style x:Key="ItemDesign" TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="0" />
-                            <Setter Property="Padding" Value="5" />
-                        </Style>
-                    </DataTemplate.Resources>
-
-                    <Border Style="{StaticResource ItemDesign}">
-                        <Grid>
-                            <TextBlock Text="{Binding Detail}" />
-                            <Image 
-                                Source="{Binding PreviewingImageSource}" 
-                                Stretch="None"
-                                >
-                            </Image>
-                        </Grid>
-                    </Border>
+                    <Grid Margin="0.2cm" Width="{Binding Width}" Height="{Binding Height}">
+                        <Image 
+                            Source="{Binding OutputImageSource}" 
+                            Stretch="Uniform"
+                            Width="{Binding Width}"
+                            Height="{Binding Height}"
+                            >
+                        </Image>
+                        <Viewbox Stretch="None" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                            <Border Background="Orange" BorderThickness="0" CornerRadius="10">
+                                <TextBlock Text="{Binding Title}" Foreground="White" FontWeight="Bold"/>
+                            </Border>
+                        </Viewbox>
+                    </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <GridSplitter 
-                    Grid.Row="2"
-                    Grid.Column="0"
-                    Width="4"
-                    VerticalAlignment="Stretch"
-                    HorizontalAlignment="Center" />
+            Grid.Row="2"
+            Grid.Column="0"
+            Height="0.25cm"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch" />
+
+        <ItemsControl
+            ItemsSource="{Binding PaperBottomPhotoList}" 
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            ScrollViewer.VerticalScrollBarVisibility="Disabled"
+            AllowDrop="True"
+            Grid.Row="3"
+            >
+            
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel 
+                        Orientation="Vertical" 
+                        FlowDirection="RightToLeft" 
+                        Background="White"
+                        ItemHeight="Auto"
+                        ItemWidth="Auto"
+                        />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0.2cm" Width="{Binding Width}" Height="{Binding Height}">
+                        <Image 
+                            Source="{Binding OutputImageSource}" 
+                            Stretch="Uniform"
+                            Width="{Binding Width}"
+                            Height="{Binding Height}"
+                            >
+                        </Image>
+                        <Viewbox Stretch="None" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                            <Border Background="Orange" BorderThickness="0" CornerRadius="10">
+                                <TextBlock Text="{Binding Title}" Foreground="White" FontWeight="Bold" />
+                            </Border>
+                        </Viewbox>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>
