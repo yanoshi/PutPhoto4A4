@@ -216,7 +216,7 @@ namespace PutPhoto4A4.ViewModels
 
 
         #region Scale
-        private int _Scale = 3;
+        private int _Scale = 1;
         /// <summary>
         /// スケールを示す
         /// 1: 2.5cm

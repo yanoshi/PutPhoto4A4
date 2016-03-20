@@ -9,6 +9,7 @@
         xmlns:vm="clr-namespace:PutPhoto4A4.ViewModels"
         xmlns:bh="clr-namespace:PutPhoto4A4.Behaviors"
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        x:Name="window"
         mc:Ignorable="d"
         Title="MainWindow" 
         WindowStyle="None"
@@ -31,7 +32,15 @@
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <!-- 上部メニュー -->
-            <Slider Width="15cm" Value="{Binding PaperScale}" Maximum="3.0" Minimum="0.0" HorizontalAlignment="Center" />
+            <Button HorizontalAlignment="Right" Width="64" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click"> 
+                        <ei:CallMethodAction TargetObject="{Binding ElementName=window}" MethodName="Close"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                終了
+            </Button>
+            <Slider Width="15cm" Height="32" Value="{Binding PaperScale}" Maximum="3.0" Minimum="0.0" HorizontalAlignment="Center" />
         </Grid>
 
 
@@ -52,19 +61,20 @@
                 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.0cm" />
-                    <RowDefinition Height="{Binding TopRegionHeight}" />
+                    <RowDefinition Height="{Binding TopRegionHeight, Mode=TwoWay}" />
                     <RowDefinition Height="0.25cm" />
-                    <RowDefinition Height="{Binding BottomRegionHeight}" />
+                    <RowDefinition Height="{Binding BottomRegionHeight, Mode=TwoWay}" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <TextBlock 
+                <TextBox 
                     Grid.Row="0"
                     Text="{Binding Title}"
-                    Margin="0.4cm 0.4cm 0 0"
-                    FontSize="15pt"
+                    Margin="0.3cm 0.3cm 0.3cm 0"
+                    FontSize="0.5cm"
+                    VerticalAlignment="Stretch"
                     />
 
                 <ItemsControl
@@ -81,14 +91,6 @@
                         <bh:DragAcceptBehavior Description="{Binding Description}" />
                     </i:Interaction.Behaviors>
 
-                    <!--
-                    <ItemsControl.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalAlignment" Value="Stretch"/>
-                        </Style>
-                    </ItemsControl.ItemContainerStyle>
-                    -->
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -146,6 +148,70 @@
                     Height="0.25cm"
                     VerticalAlignment="Center"
                     HorizontalAlignment="Stretch" />
+
+                <ItemsControl
+                    ItemsSource="{Binding PaperBottomPhotoList}" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                    AllowDrop="True"
+                    BorderThickness="1"
+                    BorderBrush="Black"
+                    Grid.Row="3"
+                    >
+
+                    <i:Interaction.Behaviors>
+                        <bh:DragAcceptBehavior Description="{Binding Description}" />
+                    </i:Interaction.Behaviors>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel 
+                                Orientation="Vertical" 
+                                FlowDirection="RightToLeft" 
+                                Background="White"
+                                ItemHeight="Auto"
+                                ItemWidth="Auto"
+                                />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0.2cm" Width="{Binding Width}" Height="{Binding Height}">
+                                <Image 
+                                    Source="{Binding OutputImageSource}" 
+                                    Stretch="Uniform"
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    >
+                                    <i:Interaction.Behaviors>
+                                        <bh:DragStartBehavior AllowedEffects="Move" DragDropData="{Binding}" />
+                                    </i:Interaction.Behaviors>
+                                </Image>
+                                <Viewbox Stretch="None">
+                                    <Button 
+                                        Command="{Binding DataContext.ChangeImageSizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}"
+                                        >
+                                        サイズ変更
+                                    </Button>
+                                </Viewbox>
+                                <Viewbox Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                    <Button                                             
+                                        Command="{Binding DataContext.ChangePlacementCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}"
+                                        >
+                                        配置変更
+                                    </Button>
+                                </Viewbox>
+                                <Viewbox Stretch="None" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
+                                    <TextBox Text="{Binding Title}" Width="2.5cm" />
+                                </Viewbox>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </Grid>
         </ScrollViewer>
 

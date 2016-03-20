@@ -95,7 +95,7 @@ namespace PutPhoto4A4.ViewModels
 
 
         #region TopRegionHeight
-        private double _TopRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("11.85cm");
+        private double _TopRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("13.2cm");
         public double TopRegionHeight
         {
             get { return _TopRegionHeight; }
@@ -104,7 +104,9 @@ namespace PutPhoto4A4.ViewModels
                 if(_TopRegionHeight !=value)
                 {
                     _TopRegionHeight = value;
+                    _BottomRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("19.75cm") - value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged("BottomRegionHeight");
                 }
             }
         }
@@ -112,7 +114,7 @@ namespace PutPhoto4A4.ViewModels
 
 
         #region BottomRegionHeight
-        private double _BottomRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("7.9cm");
+        private double _BottomRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("6.58cm");
         public double BottomRegionHeight
         {
             get { return _BottomRegionHeight; }
@@ -121,7 +123,9 @@ namespace PutPhoto4A4.ViewModels
                 if (_BottomRegionHeight!= value)
                 {
                     _BottomRegionHeight = value;
+                    _TopRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("19.75cm") - value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged("TopRegionHeight");
                 }
             }
         }
@@ -260,7 +264,6 @@ namespace PutPhoto4A4.ViewModels
                 receiveList.Insert(insertIndex, data);
             }
         }
-
         #endregion
     }
 }
