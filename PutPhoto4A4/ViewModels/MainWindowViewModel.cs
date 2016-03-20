@@ -199,6 +199,19 @@ namespace PutPhoto4A4.ViewModels
             }
         }
         #endregion
+
+
+        #region PrintCommand
+        private void Print()
+        {
+            Printer.Print(this);
+        }
+        private ViewModelCommand _PrintCommand;
+        public ViewModelCommand PrintCommand
+        {
+            get{ return _PrintCommand ?? (_PrintCommand = new ViewModelCommand(Print)); }
+        }
+        #endregion
         #endregion
 
 
