@@ -17,6 +17,11 @@ namespace PutPhoto4A4.Models
         {
             OriginalMat = new Mat(uri);
         }
+
+        public Photo(Mat input)
+        {
+            OriginalMat = input;
+        }
         #endregion
 
 

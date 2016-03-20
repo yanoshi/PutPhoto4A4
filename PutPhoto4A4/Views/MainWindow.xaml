@@ -4,13 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PutPhoto4A4"
+        xmlns:vm="clr-namespace:PutPhoto4A4.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" 
         WindowStyle="None"
         WindowState="Maximized"
         Topmost="True"
-        Loaded="Window_Loaded"        
+        Loaded="Window_Loaded"
         >
+    <Window.DataContext>
+        <vm:MainWindowViewModel />
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
@@ -26,13 +30,44 @@
         </DockPanel>
 
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0">
+        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto">
             <!-- メイン描画部分 -->
             
         </ScrollViewer>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <!-- 右メニュー -->
-        </ScrollViewer>
+        <!-- 右メニュー -->
+        <ListBox 
+            ItemsSource="{Binding InputPhotoList}"
+            Grid.Row="1" Grid.Column="1"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            >
+
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
+
+                        <Style x:Key="InputItemDesign" TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="0" />
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.ControlDarkBrush}" />
+                            <Setter Property="BorderThickness" Value="1 1 1 1" />
+                        </Style>
+                    </DataTemplate.Resources>
+
+                    <Image 
+                        Source="{Binding OutputImageSource}" 
+                        />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

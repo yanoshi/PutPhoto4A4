@@ -1,5 +1,8 @@
-﻿using System;
+﻿using PutPhoto4A4.Models;
+using PutPhoto4A4.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +36,15 @@ namespace PutPhoto4A4.Views
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             var googlePhotos = new GooglePhotoViewer();
+            var vm = new GooglePhotoViewerViewModel();
+            googlePhotos.DataContext = vm;
             googlePhotos.ShowDialog();
+
+            var tempPhotoList = new ObservableCollection<Photo>();
+            foreach (var item in vm.MatList)
+                tempPhotoList.Add(new Photo(item));
+
+            ((MainWindowViewModel)this.DataContext).InputPhotoList = tempPhotoList;
         }
     }
 }

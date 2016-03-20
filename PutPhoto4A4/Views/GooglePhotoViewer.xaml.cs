@@ -15,12 +15,18 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.IO.Compression;
+using OpenCvSharp.CPlusPlus;
+using OpenCvSharp.Extensions;
+using System.Drawing;
+using PutPhoto4A4.ViewModels;
+
 namespace PutPhoto4A4.Views
 {
     /// <summary>
     /// GooglePhotoViewer.xaml の相互作用ロジック
     /// </summary>
-    public partial class GooglePhotoViewer : Window
+    public partial class GooglePhotoViewer : System.Windows.Window
     {
         Microsoft.Win32.RegistryKey regkey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(FEATURE_BROWSER_EMULATION);
         const string FEATURE_BROWSER_EMULATION = @"Software\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BROWSER_EMULATION";
@@ -49,6 +55,7 @@ namespace PutPhoto4A4.Views
         /// <param name="e"></param>
         private void WebBrowser_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
         {
+            //良い条件が思いつかなかった(ホントはMIMEで指定したかったが…)
             if (e.Uri.ToString().IndexOf("video.googleusercontent.com") != -1)
             {
                 e.Cancel = true;
@@ -57,7 +64,20 @@ namespace PutPhoto4A4.Views
 
                 client.DownloadDataCompleted += new DownloadDataCompletedEventHandler((s2,e2)=> 
                 {
-                    File.WriteAllBytes("hoge.zip", e2.Result);
+                    var matList = new List<Mat>();
+                    using (var ms = new System.IO.MemoryStream(e2.Result))
+                    {
+                        using (var zipArchive = new ZipArchive(ms, ZipArchiveMode.Read))
+                        {
+                            foreach(var item in zipArchive.Entries)
+                            {
+                                matList.Add((new Bitmap(item.Open())).ToMat());
+                            }
+                        }
+                    }
+                    ((GooglePhotoViewerViewModel)this.DataContext).MatList = matList;
+
+                    this.Close();
                 });
 
                 client.DownloadDataAsync(e.Uri);

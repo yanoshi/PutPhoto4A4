@@ -1,6 +1,9 @@
 ﻿using Livet;
+using OpenCvSharp.CPlusPlus;
+using PutPhoto4A4.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -19,6 +22,12 @@ namespace PutPhoto4A4.ViewModels
                 //VSデザイナ向けの処理
                 Title = "これはテストです";
 
+                InputPhotoList = new ObservableCollection<Photo>(new Photo[]
+                {
+                    new Photo(@"C:\Windows\Web\Screen\img100.jpg"),
+                    new Photo(@"C:\Windows\Web\Screen\img101.jpg"),
+                    new Photo(@"C:\Windows\Web\Screen\img102.jpg")
+                });
             }
         }
         #endregion
@@ -45,6 +54,22 @@ namespace PutPhoto4A4.ViewModels
         }
         #endregion
 
+
+        #region InputPhotoList
+        private ObservableCollection<Photo> _InputPhotoList;
+        public ObservableCollection<Photo> InputPhotoList
+        {
+            get { return _InputPhotoList; }
+            set
+            {
+                if(_InputPhotoList!=value)
+                {
+                    _InputPhotoList = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
         #endregion
     }
 }

@@ -10,7 +10,7 @@
     <UserControl.DataContext>
         <vm:MainWindowViewModel />
     </UserControl.DataContext>
-    
+
     <Grid Width="29.7cm" Height="21cm">
         <Grid.RowDefinitions>
             <RowDefinition Height="1.0cm" />
@@ -23,13 +23,58 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock 
-            Grid.Row="0"
-            Text="{Binding Title}"
-            Margin="0.4cm 0.4cm 0 0"
-            FontSize="15pt"
-            />
-        
-        
+                    Grid.Row="0"
+                    Text="{Binding Title}"
+                    Margin="0.4cm 0.4cm 0 0"
+                    FontSize="15pt"
+                    />
+
+        <ListBox 
+                    Grid.Row="1"
+                    ItemsSource="{Binding SpineVoxelDatas}" 
+                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"  
+                    SelectedIndex="{Binding DataContext.SelectingSpineIndex, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                    >
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
+
+                        <Style x:Key="ItemDesign" TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="0" />
+                            <Setter Property="Padding" Value="5" />
+                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.ControlDarkBrush}" />
+                            <Setter Property="BorderThickness" Value="1 1 1 1" />
+                        </Style>
+                    </DataTemplate.Resources>
+
+                    <Border Style="{StaticResource ItemDesign}">
+                        <Grid>
+                            <TextBlock Text="{Binding Detail}" />
+                            <Image 
+                                Source="{Binding PreviewingImageSource}" 
+                                Stretch="None"
+                                >
+                            </Image>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
         <GridSplitter 
                     Grid.Row="2"
