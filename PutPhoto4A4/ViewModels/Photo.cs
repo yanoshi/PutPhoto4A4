@@ -9,7 +9,7 @@ using OpenCvSharp.CPlusPlus;
 using OpenCvSharp.Extensions;
 using Livet;
 
-namespace PutPhoto4A4.Models
+namespace PutPhoto4A4.ViewModels
 {
     public class Photo : ViewModel
     {
@@ -179,6 +179,83 @@ namespace PutPhoto4A4.Models
         }
         #endregion
 
+
+        #region Width
+        public double Width
+        {
+            get
+            {
+                var tempMat = OutputMat;
+
+                double longSideLen = ScaleToDouble(Scale);
+
+                if (tempMat.Width > tempMat.Height)
+                    return longSideLen;
+                else
+                    return (longSideLen / (double)tempMat.Height) * (double) tempMat.Width;
+            }
+        }
+        #endregion
+
+
+        #region Height
+        public double Height
+        {
+            get
+            {
+                var tempMat = OutputMat;
+
+                double longSideLen = ScaleToDouble(Scale);
+
+                if (tempMat.Width < tempMat.Height)
+                    return longSideLen;
+                else
+                    return (longSideLen /(double)tempMat.Width) * (double)tempMat.Height;
+            }
+        }
+        #endregion
+
+
+        #region Scale
+        private int _Scale = 3;
+        /// <summary>
+        /// スケールを示す
+        /// 1: 2.5cm
+        /// 2: 3.0cm
+        /// 3: 4.0cm
+        /// 4: 5.0cm
+        /// 5: 7.0cm
+        /// </summary>
+        public int Scale
+        {
+            get { return _Scale; }
+            set
+            {
+                if(_Scale != value)
+                {
+                    _Scale = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("Width");
+                    RaisePropertyChanged("Height");
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+
+        #region メソッド
+        public double ScaleToDouble(int s)
+        {
+            return (double)(new System.Windows.LengthConverter()).ConvertFrom(new string[]
+                {
+                    "2.5cm",
+                    "3.0cm",
+                    "4.0cm",
+                    "5.0cm",
+                    "7.0cm"
+                }[s]);
+        }
         #endregion
     }
 }

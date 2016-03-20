@@ -69,35 +69,26 @@
 
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal" FlowDirection="RightToLeft" Background="White" />
+                            <WrapPanel Orientation="Vertical" FlowDirection="RightToLeft" Background="White" />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
 
 
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <DataTemplate.Resources>
-                                <SolidColorBrush x:Key="BackGroundBrush" Color="{x:Static SystemColors.WindowColor}"  />
-
-                                <Style x:Key="ItemDesign" TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="0" />
-                                    <Setter Property="Padding" Value="5" />
-                                </Style>
-                            </DataTemplate.Resources>
-
-                            <Border Style="{StaticResource ItemDesign}">
-                                <Grid>
-                                    <TextBlock Text="{Binding Title}" />
-                                    <Image 
-                                        Source="{Binding OutputImageSource}" 
-                                        Stretch="None"
-                                        >
-                                        <i:Interaction.Behaviors>
-                                            <bh:DragStartBehavior AllowedEffects="Move" DragDropData="{Binding}" />
-                                        </i:Interaction.Behaviors>
-                                    </Image>
-                                </Grid>
-                            </Border>
+                        <DataTemplate>                                
+                            <DockPanel Margin="0.2cm">
+                                <TextBlock Text="{Binding Title}" />
+                                <Image 
+                                    Source="{Binding OutputImageSource}" 
+                                    Stretch="Uniform"
+                                    Width="{Binding Width}"
+                                    Height="{Binding Height}"
+                                    >
+                                    <i:Interaction.Behaviors>
+                                        <bh:DragStartBehavior AllowedEffects="Move" DragDropData="{Binding}" />
+                                    </i:Interaction.Behaviors>
+                                </Image>
+                            </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

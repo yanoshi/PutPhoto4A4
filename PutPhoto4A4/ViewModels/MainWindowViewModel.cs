@@ -122,8 +122,8 @@ namespace PutPhoto4A4.ViewModels
                 if (tempItemControl == null)
                     return;
 
-                if (((args.Source as ItemsControl).ItemsSource as ObservableCollection<Photo>).Count != 0)
-                    return;
+                /*if (((args.Source as ItemsControl).ItemsSource as ObservableCollection<Photo>).Count != 0)
+                    return;*/
 
                 if (PaperBottomPhotoList.Contains(data))
                     PaperBottomPhotoList.Remove(data);

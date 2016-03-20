@@ -48,6 +48,7 @@ namespace PutPhoto4A4.Views
                 tempPhotoList.Add(new Photo(item));
 
             ((MainWindowViewModel)this.DataContext).InputPhotoList = tempPhotoList;
+;
         }
     }
 }
