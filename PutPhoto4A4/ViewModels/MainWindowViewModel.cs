@@ -126,6 +126,23 @@ namespace PutPhoto4A4.ViewModels
             }
         }
         #endregion
+
+
+        #region PaperScale
+        private double _PaperScale = 1.0;
+        public double PaperScale
+        {
+            get { return _PaperScale; }
+            set
+            {
+                if(_PaperScale!=value)
+                {
+                    _PaperScale = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
         #endregion
 
 

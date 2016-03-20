@@ -31,12 +31,25 @@
 
         <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <!-- 上部メニュー -->
+            <Slider Width="15cm" Value="{Binding PaperScale}" Maximum="3.0" Minimum="0.0" HorizontalAlignment="Center" />
         </Grid>
 
 
-        <ScrollViewer Grid.Row="1" Grid.Column="0" HorizontalScrollBarVisibility="Auto" BorderThickness="1">
+        <ScrollViewer 
+            Grid.Row="1" 
+            Grid.Column="0" 
+            HorizontalScrollBarVisibility="Auto"
+            VerticalScrollBarVisibility="Auto"
+            BorderThickness="1" 
+            BorderBrush="Black"
+            PanningMode="Both">
             <!-- メイン描画部分 -->
             <Grid Width="29.7cm" Height="21cm">
+                <Grid.LayoutTransform>
+                    <ScaleTransform ScaleX="{Binding PaperScale}"
+                                    ScaleY="{Binding PaperScale}" />
+                </Grid.LayoutTransform>
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1.0cm" />
                     <RowDefinition Height="{Binding TopRegionHeight}" />
@@ -60,7 +73,8 @@
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     AllowDrop="True"
                     BorderThickness="1"
-                    Grid.Row="0"
+                    BorderBrush="Black"
+                    Grid.Row="1"
                     >
 
                     <i:Interaction.Behaviors>
