@@ -8,6 +8,7 @@ using OpenCvSharp;
 using OpenCvSharp.CPlusPlus;
 using OpenCvSharp.Extensions;
 using Livet;
+using PutPhoto4A4.Models;
 
 namespace PutPhoto4A4.ViewModels
 {
@@ -26,6 +27,7 @@ namespace PutPhoto4A4.ViewModels
         #endregion
 
 
+
         #region プロパティ
         #region Title
         private string _Title;
@@ -38,8 +40,6 @@ namespace PutPhoto4A4.ViewModels
                 {
                     _Title = value;
                     RaisePropertyChanged();
-                    RaisePropertyChanged("OutputMat");
-                    RaisePropertyChanged("OutputImageSource");
                 }
             }
         }
@@ -59,6 +59,8 @@ namespace PutPhoto4A4.ViewModels
                     RaisePropertyChanged();
                     RaisePropertyChanged("OutputMat");
                     RaisePropertyChanged("OutputImageSource");
+                    RaisePropertyChanged("Width");
+                    RaisePropertyChanged("Height");
                 }
             }
         }
@@ -66,7 +68,7 @@ namespace PutPhoto4A4.ViewModels
 
 
         #region VerticalAlign
-        private VerticalState _VerticalAlign;
+        private VerticalState _VerticalAlign = VerticalState.Center;
 
         public VerticalState VerticalAlign
         {
@@ -82,13 +84,11 @@ namespace PutPhoto4A4.ViewModels
                 }
             }
         }
-        
-        public enum VerticalState { Top,Center,Bottom }
         #endregion
 
 
         #region HorizontalAlign
-        private HorizontalState _HorizontalAlign;
+        private HorizontalState _HorizontalAlign = HorizontalState.Center;
         public HorizontalState HorizontalAlign
         {
             get { return _HorizontalAlign; }
@@ -103,8 +103,6 @@ namespace PutPhoto4A4.ViewModels
                 }
             }
         }
-
-        public enum HorizontalState { Left,Center,Right}
         #endregion
 
 
@@ -162,8 +160,9 @@ namespace PutPhoto4A4.ViewModels
                     //正方形
                     return OriginalMat;
                 }
-
-                return OriginalMat[rectForCrop];
+                Mat output = new Mat();
+                OriginalMat[rectForCrop].ConvertTo(output, MatType.CV_8UC3);
+                return output;
             }
         }
         #endregion
@@ -189,10 +188,10 @@ namespace PutPhoto4A4.ViewModels
 
                 double longSideLen = ScaleToDouble(Scale);
 
-                if (tempMat.Width > tempMat.Height)
+                if (tempMat.Width >= tempMat.Height)
                     return longSideLen;
                 else
-                    return (longSideLen / (double)tempMat.Height) * (double) tempMat.Width;
+                    return ((double)tempMat.Width / (double)tempMat.Height) * longSideLen;
             }
         }
         #endregion
@@ -207,10 +206,10 @@ namespace PutPhoto4A4.ViewModels
 
                 double longSideLen = ScaleToDouble(Scale);
 
-                if (tempMat.Width < tempMat.Height)
+                if (tempMat.Width <= tempMat.Height)
                     return longSideLen;
                 else
-                    return (longSideLen /(double)tempMat.Width) * (double)tempMat.Height;
+                    return ((double)tempMat.Height / (double)tempMat.Width) * longSideLen;
             }
         }
         #endregion
@@ -221,10 +220,11 @@ namespace PutPhoto4A4.ViewModels
         /// <summary>
         /// スケールを示す
         /// 1: 2.5cm
-        /// 2: 3.0cm
-        /// 3: 4.0cm
-        /// 4: 5.0cm
-        /// 5: 7.0cm
+        /// 2: 4.0cm
+        /// 3: 5.5cm
+        /// 4: 7.0cm
+        /// 5: 10.0cm
+        /// 6: 13.0cm
         /// </summary>
         public int Scale
         {
@@ -237,6 +237,7 @@ namespace PutPhoto4A4.ViewModels
                     RaisePropertyChanged();
                     RaisePropertyChanged("Width");
                     RaisePropertyChanged("Height");
+                    System.Diagnostics.Debug.WriteLine(Width.ToString() +"," + Height.ToString());
                 }
             }
         }
@@ -249,11 +250,13 @@ namespace PutPhoto4A4.ViewModels
         {
             return (double)(new System.Windows.LengthConverter()).ConvertFrom(new string[]
                 {
+                    "0cm",
                     "2.5cm",
-                    "3.0cm",
                     "4.0cm",
-                    "5.0cm",
-                    "7.0cm"
+                    "5.5cm",
+                    "7.0cm",
+                    "10.0cm",
+                    "13.0cm"
                 }[s]);
         }
         #endregion

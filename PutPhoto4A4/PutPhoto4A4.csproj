@@ -153,6 +153,8 @@
     <Compile Include="Behaviors\DragAcceptBehavior.cs" />
     <Compile Include="Behaviors\DragStartBehavior.cs" />
     <Compile Include="Models\DragAcceptDescription.cs" />
+    <Compile Include="Models\HorizontalState.cs" />
+    <Compile Include="Models\VerticalState.cs" />
     <Compile Include="ViewModels\Photo.cs" />
     <Compile Include="ViewModels\GooglePhotoViewerViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

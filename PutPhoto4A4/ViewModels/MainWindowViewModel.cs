@@ -1,4 +1,5 @@
 ﻿using Livet;
+using Livet.Commands;
 using OpenCvSharp.CPlusPlus;
 using PutPhoto4A4.Models;
 using System;
@@ -38,13 +39,8 @@ namespace PutPhoto4A4.ViewModels
         #endregion
 
 
-        #region メンバ変数
-        
-        #endregion
-
 
         #region プロパティ
-
         #region Title
         private string _Title;
         /// <summary>
@@ -87,12 +83,100 @@ namespace PutPhoto4A4.ViewModels
         public ObservableCollection<Photo> PaperTopPhotoList { get; } = new ObservableCollection<Photo>();
         #endregion
 
+
         #region PaperBottomPhotoList
         public ObservableCollection<Photo> PaperBottomPhotoList { get; } = new ObservableCollection<Photo>();
         #endregion
 
+
         #region Description
         public DragAcceptDescription Description { get; }
+        #endregion
+
+
+        #region TopRegionHeight
+        private double _TopRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("11.85cm");
+        public double TopRegionHeight
+        {
+            get { return _TopRegionHeight; }
+            set
+            {
+                if(_TopRegionHeight !=value)
+                {
+                    _TopRegionHeight = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+
+        #region BottomRegionHeight
+        private double _BottomRegionHeight = (double)(new System.Windows.LengthConverter()).ConvertFrom("7.9cm");
+        public double BottomRegionHeight
+        {
+            get { return _BottomRegionHeight; }
+            set
+            {
+                if (_BottomRegionHeight!= value)
+                {
+                    _BottomRegionHeight = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+        #endregion
+
+
+        #region コマンド
+        #region ChangeImageSizeCommand
+        private int sizeStateNum = 6;
+
+        private void ChangeImageSize(Photo obj)
+        {
+            sizeStateNum++;
+            if (sizeStateNum > 13)
+                sizeStateNum = 2;
+            obj.Scale = sizeStateNum / 2;
+            obj.IsCrop = sizeStateNum % 2 == 0 ? false : true;
+        }
+        private ListenerCommand<Photo> _ChangeImageSizeCommand;
+        public ListenerCommand<Photo> ChangeImageSizeCommand
+        {
+            get
+            {
+                if (_ChangeImageSizeCommand == null)
+                    _ChangeImageSizeCommand = new ListenerCommand<Photo>(ChangeImageSize);
+                return _ChangeImageSizeCommand;
+            }
+        }
+        #endregion
+
+
+        #region ChangePlacementCommand
+        private int placementStateNum = 1;
+
+        private void ChangePlacement(Photo sender)
+        {
+            placementStateNum++;
+            if (placementStateNum > 2)
+                placementStateNum = 0;
+
+            sender.HorizontalAlign = (HorizontalState)Enum.ToObject(typeof(HorizontalState), placementStateNum);
+            sender.VerticalAlign = (VerticalState)Enum.ToObject(typeof(VerticalState), placementStateNum);
+        }
+
+        private ListenerCommand<Photo> _ChangePlacementCommand;
+        public ListenerCommand<Photo> ChangePlacementCommand
+        {
+            get
+            {
+                if (_ChangePlacementCommand == null)
+                    _ChangePlacementCommand = new ListenerCommand<Photo>(ChangePlacement);
+                return _ChangePlacementCommand;
+            }
+        }
         #endregion
         #endregion
 
@@ -159,6 +243,7 @@ namespace PutPhoto4A4.ViewModels
                 receiveList.Insert(insertIndex, data);
             }
         }
+
         #endregion
     }
 }
