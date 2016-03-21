@@ -11,8 +11,7 @@
         <vm:MainWindowViewModel />
     </UserControl.DataContext>
 
-    <Grid Width="29.7cm" Height="21cm" 
-            Margin="0.3cm">
+    <Grid Width="29.7cm" Height="21cm" >
         <Grid.Resources>
             <m:DoubleGridLengthConverter x:Key="DoubleGridLengthConverter"/>
         </Grid.Resources>
@@ -31,6 +30,7 @@
         <TextBlock 
             Grid.Row="0"
             Text="{Binding Title}"
+            Margin="0.3cm 0.3cm 0.3cm 0"
             FontSize="0.5cm"
             VerticalAlignment="Stretch"
             />
@@ -42,6 +42,7 @@
             AllowDrop="True"
             Background="White"
             Grid.Row="1"
+            Margin="0.3cm 0cm 0.3cm 0"
             >
             
             <ItemsControl.ItemsPanel>
@@ -90,6 +91,7 @@
             ScrollViewer.VerticalScrollBarVisibility="Disabled"
             AllowDrop="True"
             Grid.Row="3"
+            Margin="0.3cm 0cm 0.3cm 0"
             >
             
             <ItemsControl.ItemsPanel>

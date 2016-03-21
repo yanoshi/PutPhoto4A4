@@ -43,6 +43,12 @@ namespace PutPhoto4A4.Views
             googlePhotos.DataContext = vm;
             googlePhotos.ShowDialog();
 
+            if (vm.MatList == null)
+            {
+                this.Close();
+                return;
+            }
+
             var tempPhotoList = new ObservableCollection<Photo>();
             foreach (var item in vm.MatList)
                 tempPhotoList.Add(new Photo(item));

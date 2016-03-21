@@ -33,10 +33,20 @@ namespace PutPhoto4A4.Views
         string process_name = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".exe";
         string process_dbg_name = System.Diagnostics.Process.GetCurrentProcess().ProcessName + ".vshost.exe";
 
+        [DllImport("urlmon.dll", CharSet = CharSet.Ansi)]
+        private static extern int UrlMkSetSessionOption(int dwOption, string str, int nLength, int dwReserved);
+
+
         public GooglePhotoViewer()
         {
             regkey.SetValue(process_name, 11001, Microsoft.Win32.RegistryValueKind.DWord);
             regkey.SetValue(process_dbg_name, 11001, Microsoft.Win32.RegistryValueKind.DWord);
+
+            //環境変数の書き換え
+            const int URLMON_OPTION_USERAGENT = 0x10000001;
+            //ギャラタブのUAを拝借
+            string ua = "Mozilla/5.0 (Linux; Android 4.4.4; ja-jp; SCT21 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/28.0.1500.94 Safari/537.36";
+            UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, ua, ua.Length, 0);
 
             InitializeComponent();
         }

@@ -35,7 +35,8 @@ namespace PutPhoto4A4.Models
             //Create first page of document
             fixedPage.Children.Add(reportToPrint);
             fixedPage.Measure(pageSize);
-            fixedPage.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
+            //fixedPage.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
+            fixedPage.Arrange(new Rect(15, 15, pageSize.Height, pageSize.Width));
             fixedPage.UpdateLayout();
             fixedPage.Width = 11.69 * 96;
             fixedPage.Height = 8.27 * 96;
