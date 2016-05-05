@@ -152,15 +152,9 @@ namespace PutPhoto4A4.ViewModels
 
         #region コマンド
         #region ChangeImageSizeCommand
-        private int sizeStateNum = 6;
-
         private void ChangeImageSize(Photo obj)
         {
-            sizeStateNum++;
-            if (sizeStateNum > 13)
-                sizeStateNum = 2;
-            obj.Scale = sizeStateNum / 2;
-            obj.IsCrop = sizeStateNum % 2 == 0 ? false : true;
+            obj.SizeStateIndex++;
         }
         private ListenerCommand<Photo> _ChangeImageSizeCommand;
         public ListenerCommand<Photo> ChangeImageSizeCommand
@@ -196,6 +190,24 @@ namespace PutPhoto4A4.ViewModels
                 if (_ChangePlacementCommand == null)
                     _ChangePlacementCommand = new ListenerCommand<Photo>(ChangePlacement);
                 return _ChangePlacementCommand;
+            }
+        }
+        #endregion
+
+
+        #region ChangeRotateCommand
+        private void ChangeRotate(Photo sender)
+        {
+            sender.Rotate = (sender.Rotate + 90) % 360;
+        }
+        private ListenerCommand<Photo> _ChangeRotateCommand;
+        public  ListenerCommand<Photo> ChangeRotateCommand
+        {
+            get
+            {
+                if (_ChangeRotateCommand == null)
+                    _ChangeRotateCommand = new ListenerCommand<Photo>(ChangeRotate);
+                return _ChangeRotateCommand;
             }
         }
         #endregion

@@ -142,6 +142,14 @@
                                         配置変更
                                     </Button>
                                 </Viewbox>
+                                <Viewbox Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                    <Button                                             
+                                        Command="{Binding DataContext.ChangeRotateCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}"
+                                        >
+                                        回転
+                                    </Button>
+                                </Viewbox>                                
                                 <Viewbox Stretch="None" VerticalAlignment="Bottom" HorizontalAlignment="Left" >
                                     <TextBox Text="{Binding Title}" Width="2.5cm" />
                                 </Viewbox>
@@ -203,6 +211,14 @@
                                         CommandParameter="{Binding}"
                                         >
                                         サイズ変更
+                                    </Button>
+                                </Viewbox>
+                                <Viewbox Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                    <Button                                             
+                                        Command="{Binding DataContext.ChangeRotateCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"
+                                        CommandParameter="{Binding}"
+                                        >
+                                        回転
                                     </Button>
                                 </Viewbox>
                                 <Viewbox Stretch="None" VerticalAlignment="Top" HorizontalAlignment="Left">

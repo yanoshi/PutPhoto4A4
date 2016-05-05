@@ -18,7 +18,7 @@
     
     <Grid>
         <WebBrowser
-            Source="https://photos.google.com/?hl=ja"
+            Source="https://photos.google.com/login"
             Navigating="WebBrowser_Navigating"
             
             />

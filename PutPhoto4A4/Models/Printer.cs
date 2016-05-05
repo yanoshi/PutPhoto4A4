@@ -35,8 +35,8 @@ namespace PutPhoto4A4.Models
             //Create first page of document
             fixedPage.Children.Add(reportToPrint);
             fixedPage.Measure(pageSize);
-            //fixedPage.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
-            fixedPage.Arrange(new Rect(15, 15, pageSize.Height, pageSize.Width));
+            fixedPage.Arrange(new Rect(0, 0, pageSize.Width, pageSize.Height));
+            //fixedPage.Arrange(new Rect(15, 15, pageSize.Width, pageSize.Height));
             fixedPage.UpdateLayout();
             fixedPage.Width = 11.69 * 96;
             fixedPage.Height = 8.27 * 96;
@@ -59,8 +59,9 @@ namespace PutPhoto4A4.Models
             {
                 var pq = printDialog.PrintQueue;
 
-                printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
-                //printTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.ISOA4Rotated);
+                //printDialog.PrintTicket.PageOrientation = PageOrientation.Landscape;
+                printDialog.PrintTicket.PageOrientation = PageOrientation.Portrait;
+                //printDialog.PrintTicket.PageMediaSize = new PageMediaSize(PageMediaSizeName.ISOA4Rotated);
                 //printTicket.PageOrientation = PageOrientation.Portrait;
 
                 printDialog.PrintDocument(fixedDocument.DocumentPaginator, "A4");

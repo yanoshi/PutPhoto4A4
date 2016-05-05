@@ -45,7 +45,8 @@ namespace PutPhoto4A4.Views
             //環境変数の書き換え
             const int URLMON_OPTION_USERAGENT = 0x10000001;
             //ギャラタブのUAを拝借
-            string ua = "Mozilla/5.0 (Linux; Android 4.4.4; ja-jp; SCT21 Build/KTU84P) AppleWebKit/537.36 (KHTML, like Gecko) Version/1.5 Chrome/28.0.1500.94 Safari/537.36";
+            //色々とあって、取り敢えずEdgeのUAに戻すなど
+            string ua = "Mozilla/5.0 (Windows NT 6.3; WOW64; Trident/7.0; Touch; .NET4.0E; .NET4.0C; .NET CLR 3.5.30729; .NET CLR 2.0.50727; .NET CLR 3.0.30729; Tablet PC 2.0; rv:11.0) like Gecko";
             UrlMkSetSessionOption(URLMON_OPTION_USERAGENT, ua, ua.Length, 0);
 
             InitializeComponent();

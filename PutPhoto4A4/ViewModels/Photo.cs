@@ -9,6 +9,7 @@ using OpenCvSharp.CPlusPlus;
 using OpenCvSharp.Extensions;
 using Livet;
 using PutPhoto4A4.Models;
+using PutPhoto4A4.Extension;
 
 namespace PutPhoto4A4.ViewModels
 {
@@ -25,7 +26,6 @@ namespace PutPhoto4A4.ViewModels
             OriginalMat = input;
         }
         #endregion
-
 
 
         #region プロパティ
@@ -116,52 +116,55 @@ namespace PutPhoto4A4.ViewModels
         {
             get
             {
+                Mat rotatedMat = OriginalMat.RotateImage(Rotate);
+
                 if (!IsCrop)
-                    return OriginalMat;
+                    return rotatedMat;
 
                 Rect rectForCrop;
 
-                if (OriginalMat.Width > OriginalMat.Height)
+                if (rotatedMat.Width > rotatedMat.Height)
                 {
                     //横が長辺
                     
                     switch(HorizontalAlign)
                     {
                         case HorizontalState.Left:
-                            rectForCrop = new Rect(0, 0, OriginalMat.Height, OriginalMat.Height);
+                            rectForCrop = new Rect(0, 0, rotatedMat.Height, rotatedMat.Height);
                             break;
                         case HorizontalState.Right:
-                            rectForCrop = new Rect(OriginalMat.Width - OriginalMat.Height, 0, OriginalMat.Height, OriginalMat.Height);
+                            rectForCrop = new Rect(rotatedMat.Width - rotatedMat.Height, 0, rotatedMat.Height, rotatedMat.Height);
                             break;
                         default:
-                            rectForCrop = new Rect((OriginalMat.Width - OriginalMat.Height) / 2, 0, OriginalMat.Height, OriginalMat.Height);
+                            rectForCrop = new Rect((rotatedMat.Width - rotatedMat.Height) / 2, 0, rotatedMat.Height, rotatedMat.Height);
                             break;
                     }
                 }
-                else if (OriginalMat.Width < OriginalMat.Height)
+                else if (rotatedMat.Width < rotatedMat.Height)
                 {
                     //縦が長辺
 
                     switch (VerticalAlign)
                     {
                         case VerticalState.Top:
-                            rectForCrop = new Rect(0, 0, OriginalMat.Width, OriginalMat.Width);
+                            rectForCrop = new Rect(0, 0, rotatedMat.Width, rotatedMat.Width);
                             break;
                         case VerticalState.Bottom:
-                            rectForCrop = new Rect(0, OriginalMat.Height - OriginalMat.Width, OriginalMat.Width, OriginalMat.Width);
+                            rectForCrop = new Rect(0, rotatedMat.Height - rotatedMat.Width, rotatedMat.Width, rotatedMat.Width);
                             break;
                         default:
-                            rectForCrop = new Rect(0, (OriginalMat.Height - OriginalMat.Width) / 2, OriginalMat.Width, OriginalMat.Width);
+                            rectForCrop = new Rect(0, (rotatedMat.Height - rotatedMat.Width) / 2, rotatedMat.Width, rotatedMat.Width);
                             break;
                     }
                 }
                 else
                 {
                     //正方形
-                    return OriginalMat;
+                    return rotatedMat;
                 }
                 Mat output = new Mat();
-                OriginalMat[rectForCrop].ConvertTo(output, MatType.CV_8UC3);
+                rotatedMat[rectForCrop].ConvertTo(output, MatType.CV_8UC3);
+                rotatedMat.Dispose();
                 return output;
             }
         }
@@ -215,6 +218,29 @@ namespace PutPhoto4A4.ViewModels
         #endregion
 
 
+        #region SizeStateIndex
+        private int _SizeStateIndex = 2;
+        public int SizeStateIndex
+        {
+            get { return _SizeStateIndex; }
+            set
+            {
+                if(_SizeStateIndex != value)
+                {
+                    _SizeStateIndex = value;
+                    if (_SizeStateIndex > 13)
+                        _SizeStateIndex = 2;
+                    _Scale = _SizeStateIndex / 2;
+                    _IsCrop = _SizeStateIndex % 2 == 0 ? false : true;
+                    RaisePropertyChanged("Width");
+                    RaisePropertyChanged("Height");
+                    RaisePropertyChanged("OutputImageSource");
+                }
+            }
+        }
+        #endregion
+
+
         #region Scale
         private int _Scale = 1;
         /// <summary>
@@ -238,6 +264,28 @@ namespace PutPhoto4A4.ViewModels
                     RaisePropertyChanged("Width");
                     RaisePropertyChanged("Height");
                     System.Diagnostics.Debug.WriteLine(Width.ToString() +"," + Height.ToString());
+                }
+            }
+        }
+        #endregion
+
+
+        #region Rotate
+        private int _Rotate = 0;
+        public int Rotate
+        {
+            get { return _Rotate; }
+            set
+            {
+                if(_Rotate !=value)
+                {
+                    _Rotate = value;
+                
+                    RaisePropertyChanged();
+                    RaisePropertyChanged("Width");
+                    RaisePropertyChanged("Height");
+                    RaisePropertyChanged("OutputImageSource");
+                    RaisePropertyChanged("OriginalMat");
                 }
             }
         }
